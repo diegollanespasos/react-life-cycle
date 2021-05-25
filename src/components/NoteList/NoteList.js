@@ -1,8 +1,8 @@
-import React from "react";
-import Note from "../Note/Note";
-import "./NoteList.css";
+import React from 'react';
+import Note from '../Note/Note';
+import './NoteList.css';
 
-const NoteList = ({ notes, listTitle, category, isLoading }) => {
+const NoteList = ({ notes, listTitle, category, isLoading, updateNotes }) => {
     if (isLoading) {
       return <p>Loading...</p>;
     }
@@ -22,6 +22,7 @@ const NoteList = ({ notes, listTitle, category, isLoading }) => {
               message={note.message} 
               date={note.date}
               category={category}
+              updateNotes={updateNotes}
               />)
           }   
           </div>

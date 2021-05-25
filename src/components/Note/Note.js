@@ -1,13 +1,14 @@
-import React from "react";
-import "./Note.css";
+import React from 'react';
+import './Note.css';
 //import editIcon from '../../assets/edit-icon.png';
 import deleteIcon from '../../assets/delete.webp';
 
-const Note = ({ id, title, message, date, category }) => {
+const Note = ({ id, title, message, date, category, updateNotes }) => {
 
   const deleteNote= async () => {
     try {
       await fetch(`https://www.diegollanes.ml/api/${id}`, { method: 'DELETE' });
+      updateNotes();
     } catch(e){
       console.log(e.message);
     }
@@ -20,11 +21,11 @@ const Note = ({ id, title, message, date, category }) => {
 
   return (
     <React.Fragment>
-      <div className="note">
+      <div className='note'>
         <h3>{title}</h3>
         <p>{message}</p>
         <div id='bottom-section'>
-          <button onClick={deleteNote}><img src={deleteIcon} alt="delete" width="30" height="30"/></button>
+          <button onClick={deleteNote}><img src={deleteIcon} alt='delete' width='30' height='30'/></button>
           <p>{dateFormatted()}</p> 
         </div>  
       </div>

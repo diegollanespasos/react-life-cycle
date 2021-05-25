@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import NoteList from './components/NoteList/NoteList';
-const REQUEST_URL = "https://www.diegollanes.ml/api";
+const REQUEST_URL = 'https://www.diegollanes.ml/api';
 
 class App extends Component {
   constructor(props){
@@ -39,11 +39,11 @@ class App extends Component {
     const { notes, isLoading } = this.state;
 
     return (
-      <div className="App">
+      <div className='App'>
           <div className='notes-board'>
-            <NoteList  listTitle='To Do' notes={notes} category={1} isLoading={isLoading}/>
-            <NoteList listTitle='Doing' notes={notes} category={2} isLoading={isLoading} />
-            <NoteList listTitle='Done' notes={notes} category={3} isLoading={isLoading} />
+            <NoteList updateNotes={this.fetchNotes} listTitle='To Do' notes={notes} category={1} isLoading={isLoading}/>
+            <NoteList updateNotes={this.fetchNotes} listTitle='Doing' notes={notes} category={2} isLoading={isLoading} />
+            <NoteList updateNotes={this.fetchNotes} listTitle='Done' notes={notes} category={3} isLoading={isLoading} />
           </div>
       </div>
     );
