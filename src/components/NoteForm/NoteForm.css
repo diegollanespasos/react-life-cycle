@@ -1,0 +1,49 @@
+.note-form {
+  background-color: white;
+  margin: 3rem;
+  padding: 1.5rem;
+  border-radius: 2rem;
+  width: 25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+input[type="text"] {
+  padding: 1rem;
+  margin: 2rem;
+  border: 0;
+  border-bottom: 1px solid gray;
+  font-size: 1.7rem;
+}
+
+input[type="submit"],
+#modify-button {
+  background-color: #118ab2;
+  padding: 0.7rem 1.2rem;
+  margin: 1rem 1.4rem;
+  border-radius: 1rem;
+  font-size: 1.7rem;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  transition: all 0.2s ease-in-out;
+}
+
+#post-button:hover,
+#post-button:hover {
+  transform: scale(1.25);
+}
+
+label {
+  font-size: 1.5rem;
+  margin-right: 0.8rem;
+}
+
+textarea {
+  margin: 2rem;
+  font-size: 1.5rem;
+}
