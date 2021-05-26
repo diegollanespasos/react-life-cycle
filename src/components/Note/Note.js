@@ -1,13 +1,15 @@
 import React from 'react';
 import './Note.css';
 import deleteIcon from '../../assets/delete.webp';
+import { fetchingNotes } from '../../services/notesService';
 
-const Note = ({ id, title, message, date, updateNotes }) => {
+const Note = ({ id, title, message, date, category, updateNotes }) => {
 
   const deleteNote= async () => {
     try {
       await fetch(`https://www.diegollanes.ml/api/${id}`, { method: 'DELETE' });
-      updateNotes();
+      const newNotes = await fetchingNotes();
+      updateNotes(newNotes,category);
     } catch(e){
       console.log(e.message);
     }
@@ -24,7 +26,9 @@ const Note = ({ id, title, message, date, updateNotes }) => {
         <h3>{title}</h3>
         <p>{message}</p>
         <div id='bottom-section'>
-          <button onClick={deleteNote}><img src={deleteIcon} alt='delete' width='30' height='30'/></button>
+          <button onClick={deleteNote}>
+            <img src={deleteIcon} alt='delete' width='30' height='30'/>
+          </button>
           <p>{dateFormatted()}</p> 
         </div>  
       </div>

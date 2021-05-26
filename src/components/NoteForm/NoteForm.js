@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { fetchingNotes } from '../../services/notesService';
 import "./NoteForm.css";
 
 class NoteForm extends Component {
@@ -24,7 +25,9 @@ class NoteForm extends Component {
                 body: JSON.stringify({ title: title, message: message, category: category })
             };
             await fetch('https://www.diegollanes.ml/api', requestOptions);
-            this.props.updateNotes();
+            const fetchedNotes = await fetchingNotes();
+            this.props.updateNotes(fetchedNotes,category);
+
         } catch(e){
           console.log(e.message);
         }
@@ -51,7 +54,7 @@ class NoteForm extends Component {
                         rows="6" 
                         cols="30" />
                         <label>Category</label>
-                        <select value={category} onChange={ e => this.setState({ category: e.target.value })} id="category" name="category">
+                        <select value={category} onChange={ e => this.setState({ category: Number(e.target.value) })} id="category" name="category">
                             <option value={1}>To Do</option>
                             <option value={2}>Doing</option>
                             <option value={3}>Done</option>

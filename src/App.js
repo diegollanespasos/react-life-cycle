@@ -11,6 +11,9 @@ class App extends Component {
 
     this.state = {
       notes: [],
+      toDoNotes: [],
+      doingNotes: [],
+      doneNotes: [],
       isLoading: true,
     }
   }
@@ -22,35 +25,56 @@ class App extends Component {
 
   fetchNotes = async () => {
     try {
-        const fetchedNotes = await fetchingNotes();
-        this.setState({ notes: fetchedNotes, isLoading: false });
+        const notes = await fetchingNotes();
+        const toDoNotes = notes.filter(note => note.category === 1);
+        const doingNotes = notes.filter(note => note.category === 2);
+        const doneNotes = notes.filter(note => note.category === 3);
+        this.setState({ notes, toDoNotes, doingNotes, doneNotes, isLoading: false });
     } catch(e){
         console.log(e.message);
     }
   }
 
-  /*
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.notes !== this.state.notes) {
-      console.log('ComponentDidUpdate');
-    }
+  handlerUpdateNotes = (notes, category) => {
+    const newNotes = notes.filter(note => note.category === category);
+    if(category === 1) this.setState({ toDoNotes: newNotes });
+    if(category === 2) this.setState({ doingNotes: newNotes });
+    if(category === 3) this.setState({ doneNotes: newNotes });
   }
-  */
 
   render(){
     console.log('Render Call');
-    const { notes, isLoading } = this.state;
+    const { toDoNotes, doingNotes, doneNotes, isLoading } = this.state;
 
     return (
       <div className='App'>
           <div className='notes-board'>
-            <NoteList updateNotes={this.fetchNotes} listTitle='To Do' notes={notes} category={1} isLoading={isLoading}/>
-            <NoteList updateNotes={this.fetchNotes} listTitle='Doing' notes={notes} category={2} isLoading={isLoading} />
-            <NoteList updateNotes={this.fetchNotes} listTitle='Done' notes={notes} category={3} isLoading={isLoading} />
+            <NoteList 
+              notes={toDoNotes} 
+              updateNotes={this.handlerUpdateNotes}
+              listTitle='To Do'
+              category={1}
+              isLoading={isLoading}
+              />
+            <NoteList
+              notes={doingNotes}
+              updateNotes={this.handlerUpdateNotes}
+              listTitle='Doing' category={2}
+              isLoading={isLoading}
+              />
+            <NoteList
+              notes={doneNotes}
+              updateNotes={this.handlerUpdateNotes}
+              listTitle='Done'
+              category={3}
+              isLoading={isLoading}
+            />
           </div>
           <div className='container-note-form'>
             <h2>Post & Modify</h2>
-            <NoteForm updateNotes={this.fetchNotes} />
+            <NoteForm 
+              updateNotes={this.handlerUpdateNotes}
+            />
           </div>
       </div>
     );
