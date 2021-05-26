@@ -21,7 +21,6 @@ const NoteList = ({ notes, listTitle, category, isLoading, updateNotes }) => {
               title={note.title} 
               message={note.message} 
               date={note.date}
-              category={category}
               updateNotes={updateNotes}
               />)
           }   

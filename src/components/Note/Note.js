@@ -1,9 +1,8 @@
 import React from 'react';
 import './Note.css';
-//import editIcon from '../../assets/edit-icon.png';
 import deleteIcon from '../../assets/delete.webp';
 
-const Note = ({ id, title, message, date, category, updateNotes }) => {
+const Note = ({ id, title, message, date, updateNotes }) => {
 
   const deleteNote= async () => {
     try {

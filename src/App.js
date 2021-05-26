@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import NoteList from './components/NoteList/NoteList';
-const REQUEST_URL = 'https://www.diegollanes.ml/api';
+import NoteForm from './components/NoteForm/NoteForm';
+import { fetchingNotes } from './services/notesService';
 
 class App extends Component {
   constructor(props){
@@ -10,10 +11,6 @@ class App extends Component {
 
     this.state = {
       notes: [],
-      id: null,
-      title: '',
-      message: '',
-      category: 1,
       isLoading: true,
     }
   }
@@ -25,14 +22,20 @@ class App extends Component {
 
   fetchNotes = async () => {
     try {
-      const response = await fetch(REQUEST_URL);
-      const data = await response.json();
-        this.setState({ notes: data });
-        this.setState({ isLoading: false });
+        const fetchedNotes = await fetchingNotes();
+        this.setState({ notes: fetchedNotes, isLoading: false });
     } catch(e){
-        console.log(e.message)
+        console.log(e.message);
     }
   }
+
+  /*
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.notes !== this.state.notes) {
+      console.log('ComponentDidUpdate');
+    }
+  }
+  */
 
   render(){
     console.log('Render Call');
@@ -44,6 +47,10 @@ class App extends Component {
             <NoteList updateNotes={this.fetchNotes} listTitle='To Do' notes={notes} category={1} isLoading={isLoading}/>
             <NoteList updateNotes={this.fetchNotes} listTitle='Doing' notes={notes} category={2} isLoading={isLoading} />
             <NoteList updateNotes={this.fetchNotes} listTitle='Done' notes={notes} category={3} isLoading={isLoading} />
+          </div>
+          <div className='container-note-form'>
+            <h2>Post & Modify</h2>
+            <NoteForm updateNotes={this.fetchNotes} />
           </div>
       </div>
     );
