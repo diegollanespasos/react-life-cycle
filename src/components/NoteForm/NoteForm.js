@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { fetchingNotes } from '../../services/notesService';
 import "./NoteForm.css";
+import ButtonError from '../ButtonError/ButtonError';
 
 class NoteForm extends Component {
     constructor(props){
@@ -18,7 +19,7 @@ class NoteForm extends Component {
     }
 
     postNote = async (title, message, category) => {
-        try {
+        try{
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -27,9 +28,8 @@ class NoteForm extends Component {
             await fetch('https://www.diegollanes.ml/api', requestOptions);
             const fetchedNotes = await fetchingNotes();
             this.props.updateNotes(fetchedNotes,category);
-
         } catch(e){
-          console.log(e.message);
+            console.log(e.message);
         }
     }
 
@@ -63,6 +63,7 @@ class NoteForm extends Component {
                             <input type="submit" value="Post" id='post-button'/>
                         </div>
                     </form>
+                    <ButtonError />
                 </div> 
             </React.Fragment>
         )

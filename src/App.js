@@ -17,12 +17,19 @@ class App extends Component {
       isLoading: true,
       counterChanges: -1,
       counterDeleted: 0,
+      hasError: false,
+      errorMsg: ''
     }
   }
 
   componentDidMount = () => {
     console.log('ComponentDidMount Call');
     this.fetchNotes();
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.log("componentDidCatch");
+    this.setState({ hasError: true, errorMsg: error.toString() });
   }
 
   fetchNotes = async () => {
@@ -54,13 +61,22 @@ class App extends Component {
 
   render(){
     console.log('Render Call');
-    const { toDoNotes, doingNotes, doneNotes, isLoading, counterChanges, counterDeleted } = this.state;
+    const { toDoNotes, doingNotes, doneNotes, isLoading, counterChanges, counterDeleted, hasError, errorMsg } = this.state;
+
+    if (hasError) {
+      return (
+        <div className='error-container'>
+          <p>{ errorMsg }</p>
+          <button onClick={ () => this.setState({ hasError: false }) }>Back to website</button>
+        </div>
+      );
+    }
 
     return (
       <div className='App'>
           <div className='counters'>
              <h1>{`LIST CHANGES: ${counterChanges}`}</h1>
-             <h1>{`NOTES DELETED: ${counterDeleted}`}</h1>     
+             <h1>{`NOTES DELETED: ${counterDeleted}`}</h1>  
           </div>
           <div className='notes-board'>
             <NoteList 
