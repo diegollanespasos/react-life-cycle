@@ -11,8 +11,9 @@ class NoteList extends Component{
     return false;
   }
 
-  componentDidUpdate(){
-    console.log("ComponentDidUpdate for category: ", this.props.category);
+  componentDidUpdate(prevProps, prevState){
+    console.log("ComponentDidUpdate for list/category: ", this.props.category);
+    this.props.addCountChanges();
   }
 
   render() {
@@ -24,7 +25,7 @@ class NoteList extends Component{
       if (!isLoading) {
         return (
           <React.Fragment>
-            <div className='note-list'>
+            <div id={`${listTitle}`}className='note-list'>
               <div className={`header color${category}`}>
                 <h2>{listTitle}</h2>
               </div>
@@ -38,6 +39,8 @@ class NoteList extends Component{
                 date={note.date}
                 category={category}
                 updateNotes={updateNotes}
+                addCountChanges={this.props.addCountChanges}
+                addCountDeleted={this.props.addCountDeleted}
                 />)
             }   
             </div>

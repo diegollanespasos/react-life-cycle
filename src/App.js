@@ -15,6 +15,8 @@ class App extends Component {
       doingNotes: [],
       doneNotes: [],
       isLoading: true,
+      counterChanges: -1,
+      counterDeleted: 0,
     }
   }
 
@@ -42,25 +44,41 @@ class App extends Component {
     if(category === 3) this.setState({ doneNotes: newNotes });
   }
 
+  handlerCountChanges = () => {
+    this.setState({ counterChanges: this.state.counterChanges + 1 });
+  }
+
+  handlerCountDeleted = () => {
+    this.setState({ counterDeleted: this.state.counterDeleted + 1 });
+  }
+
   render(){
     console.log('Render Call');
-    const { toDoNotes, doingNotes, doneNotes, isLoading } = this.state;
+    const { toDoNotes, doingNotes, doneNotes, isLoading, counterChanges, counterDeleted } = this.state;
 
     return (
       <div className='App'>
+          <div className='counters'>
+             <h1>{`LIST CHANGES: ${counterChanges}`}</h1>
+             <h1>{`NOTES DELETED: ${counterDeleted}`}</h1>     
+          </div>
           <div className='notes-board'>
             <NoteList 
-              notes={toDoNotes} 
-              updateNotes={this.handlerUpdateNotes}
-              listTitle='To Do'
-              category={1}
-              isLoading={isLoading}
-              />
+            notes={toDoNotes} 
+            updateNotes={this.handlerUpdateNotes}
+            listTitle='To Do'
+            category={1}
+            isLoading={isLoading}
+            addCountChanges={this.handlerCountChanges}
+            addCountDeleted={this.handlerCountDeleted}
+            />
             <NoteList
               notes={doingNotes}
               updateNotes={this.handlerUpdateNotes}
               listTitle='Doing' category={2}
               isLoading={isLoading}
+              addCountChanges={this.handlerCountChanges}
+              addCountDeleted={this.handlerCountDeleted}
               />
             <NoteList
               notes={doneNotes}
@@ -68,6 +86,8 @@ class App extends Component {
               listTitle='Done'
               category={3}
               isLoading={isLoading}
+              addCountChanges={this.handlerCountChanges}
+              addCountDeleted={this.handlerCountDeleted}
             />
           </div>
           <div className='container-note-form'>
