@@ -15,7 +15,7 @@ class App extends Component {
       doingNotes: [],
       doneNotes: [],
       isLoading: true,
-      counterChanges: -1,
+      counterChanges: -3,
       counterDeleted: 0,
       hasError: false,
       errorMsg: ''
@@ -52,11 +52,15 @@ class App extends Component {
   }
 
   handlerCountChanges = () => {
-    this.setState({ counterChanges: this.state.counterChanges + 1 });
+    this.setState((state) => ({
+      counterChanges: state.counterChanges + 1
+    }));
   }
 
   handlerCountDeleted = () => {
-    this.setState({ counterDeleted: this.state.counterDeleted + 1 });
+    this.setState((state) => ({
+      counterDeleted: state.counterDeleted + 1
+    }));
   }
 
   render(){
